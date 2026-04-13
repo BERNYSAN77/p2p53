@@ -5,14 +5,6 @@ public class Producto {
     private double precio;
     private int stock;
 
-    public Producto(String nombre, double precio, int stock){
-        this.nombre = nombre;
-       /* this.precio = precio;
-        this.stock = stock;*/
-        setPrecio(precio);
-        setStock(stock);
-    }
-
     public Producto(){
         /*se puede dejar vacio o escribir los valores
         valores pueden ser los por defectod e java
@@ -21,9 +13,23 @@ public class Producto {
                 false si es un boolean
          inicializar en valores que el problema indique que es el por defecto
         */
-
-
     }
+    public Producto(String nombre, double precio, int stock){
+        this.nombre = nombre;
+        /*si no tengo set validados
+       this.precio = precio;
+        this.stock = stock;*/
+       /*setPrecio(precio);
+       invoca un metodo que retorna valor pero como no imprime, no asigna
+       ni opera el resultado queda solo en memoria.
+       el lenguaje no marca como error por llamar así*/
+       if(!setPrecio(precio))
+           System.out.println("valor inválido en precio, se almacena 0");
+
+        setStock(stock);
+    }
+
+
 
     /*
     métodos get (sacar información)
@@ -63,5 +69,25 @@ public class Producto {
         this.stock = stock;*/
 
         this.stock = Math.max(stock,0);
+    }
+
+    public void comprar(int cantidad){
+        if (cantidad>0){
+            stock += cantidad;
+        }
+    }
+
+    public double vender(int cantidad){
+        if (cantidad>0 && stock>cantidad){
+            stock -= cantidad;
+            return cantidad * precio;
+        }
+        return 0;
+    }
+
+    @Override
+    public String toString(){
+        return "Nombre: "+nombre+"\nPrecio: $"+precio+"\nStock: "+stock;
+
     }
 }
